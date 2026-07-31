@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html data-theme="light" dir="ltr" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NourishKid - School Canteen &amp; Tiffin Subscription Service</title>
+<meta content="Premium school canteen management, fresh tiffin subscription service, and interactive parent portal for healthy daily school meals." name="description"/>
+<!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- FontAwesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="./src/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Global Navigation Header -->
+<header class="site-header" id="site-header">
+<div class="nav-container">
+<!-- Brand Logo with Inline Vector SVG -->
+<a class="brand-logo" href="#" id="brand-home-link">
+<svg class="brand-logo-img" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="nk-bg-grad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#E05D38"></stop>
+<stop offset="100%" stop-color="#F59E0B"></stop>
+</lineargradient>
+<lineargradient id="nk-leaf-grad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#34D399"></stop>
+<stop offset="100%" stop-color="#059669"></stop>
+</lineargradient>
+</defs>
+<rect fill="url(#nk-bg-grad)" height="84" rx="24" width="84" x="8" y="8"></rect>
+<rect fill="#FFFFFF" fill-opacity="0.18" height="64" rx="16" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="2.5" width="64" x="18" y="18"></rect>
+<path d="M 18 50 L 82 50" stroke="#FFFFFF" stroke-dasharray="3 3" stroke-opacity="0.3" stroke-width="2.5"></path>
+<path d="M 50 50 L 50 82" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="2.5"></path>
+<path d="M 38 32 C 38 27 42 27 42 22" fill="none" opacity="0.9" stroke="#FFFFFF" stroke-linecap="round" stroke-width="3"></path>
+<path d="M 50 34 C 50 29 54 29 54 24" fill="none" opacity="0.9" stroke="#FFFFFF" stroke-linecap="round" stroke-width="3"></path>
+<path d="M 62 32 C 62 27 66 27 66 22" fill="none" opacity="0.9" stroke="#FFFFFF" stroke-linecap="round" stroke-width="3"></path>
+<g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(24, 56) scale(0.65)">
+<path d="M 10 25 L 10 12 C 10 6 16 6 16 12 L 16 25 M 13 25 L 13 36" fill="#FFFFFF"></path>
+<path d="M 26 8 L 26 18 M 30 8 L 30 18 M 34 8 L 34 18 M 26 18 C 26 24 34 24 34 18 M 30 24 L 30 36" fill="#FFFFFF"></path>
+</g>
+<g transform="translate(62, 10)">
+<path d="M 12 2 C 26 2 30 16 30 30 C 16 30 2 26 2 12 C 2 6 6 2 12 2 Z" fill="url(#nk-leaf-grad)" stroke="#FFFFFF" stroke-width="2"></path>
+<path d="M 12 2 Q 16 16 30 30" fill="none" opacity="0.8" stroke="#FFFFFF" stroke-linecap="round" stroke-width="2"></path>
+</g>
+</svg>
+<div class="logo-text">
+<span class="logo-title">Nourish<span class="highlight">Kid</span></span>
+<span class="logo-subtitle">Canteen &amp; Tiffin Service</span>
+</div>
+</a>
+<!-- Navigation Links -->
+<nav class="nav-menu" id="nav-menu">
+<ul class="nav-list">
+<!-- Home Dropdown -->
+<li class="nav-item has-dropdown">
+<button aria-expanded="false" class="nav-link dropdown-toggle" id="home-dropdown-btn">
+<span>Home</span>
+<i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+</button>
+<div class="dropdown-menu">
+<a class="dropdown-item active" href="./index.html">
+<div class="dropdown-icon"><i class="fa-solid fa-store"></i></div>
+<div class="dropdown-info">
+<span class="item-title">Home 1: Canteen &amp; Subscriptions</span>
+<span class="item-desc">Classic overview, menu tiers &amp; weekly builder</span>
+</div>
+</a>
+<a class="dropdown-item" href="./home2.html">
+<div class="dropdown-icon"><i class="fa-solid fa-truck-ramp-box"></i></div>
+<div class="dropdown-info">
+<span class="item-title">Home 2: Fresh Delivery &amp; Schools</span>
+<span class="item-desc">Daily kitchen pipeline &amp; school network</span>
+</div>
+</a>
+</div>
+</li>
+<!-- Direct Links -->
+<li class="nav-item">
+<a class="nav-link" href="./about.html">About</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="./services.html">Services</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="./faq.html">FAQ</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="./nutrition.html">Nutrition</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="./contact.html">Contact</a>
+</li>
+<!-- Dashboards Dropdown -->
+<li class="nav-item has-dropdown">
+<button aria-expanded="false" class="nav-link dropdown-toggle" id="dashboard-dropdown-btn">
+<span class="badge-dot"></span>
+<span>Dashboards</span>
+<i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+</button>
+<div class="dropdown-menu">
+<a class="dropdown-item" href="./parent-dashboard.html">
+<div class="dropdown-icon user-icon"><i class="fa-solid fa-user-gear"></i></div>
+<div class="dropdown-info">
+<span class="item-title">User / Parent Dashboard</span>
+<span class="item-desc">Weekly meal plans, allergies &amp; billing</span>
+</div>
+</a>
+<a class="dropdown-item" href="./admin-dashboard.html">
+<div class="dropdown-icon admin-icon"><i class="fa-solid fa-chart-line"></i></div>
+<div class="dropdown-info">
+<span class="item-title">Admin Dashboard</span>
+<span class="item-desc">Menu manager, prep metrics &amp; revenue</span>
+</div>
+</a>
+</div>
+</li>
+</ul>
+</nav>
+<!-- Right Header Actions -->
+<div class="nav-actions">
+<!-- RTL/LTR Toggle -->
+<button aria-label="Toggle Direction Mode" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleDir();}else{var html=document.documentElement; var next=html.getAttribute('dir')==='ltr'?'rtl':'ltr'; html.setAttribute('dir', next); localStorage.setItem('nk_dir', next);}" title="Toggle RTL/LTR" type="button">
+<i class="fa-solid fa-language"></i>
+</button>
+<!-- Dark / Light Theme Toggle Switch -->
+<button aria-label="Toggle Light/Dark Theme" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleTheme();}else{var html=document.documentElement; var next=html.getAttribute('data-theme')==='light'?'dark':'light'; html.setAttribute('data-theme', next); localStorage.setItem('nk_theme', next); var icon=document.getElementById('theme-icon'); if(icon){icon.className=next==='dark'?'fa-solid fa-sun':'fa-solid fa-moon';}}" title="Toggle Theme" type="button">
+<i class="fa-solid fa-moon" id="theme-icon"></i>
+</button>
+<!-- Mobile Navigation Toggle -->
+<button aria-label="Toggle Menu" class="btn-mobile-menu" id="mobile-menu-btn">
+<i class="fa-solid fa-bars"></i>
+</button>
+<!-- CTA Subscribe Button -->
+<button class="btn btn-primary nav-cta-btn" id="open-subscribe-modal-btn">
+<i class="fa-solid fa-calendar-check"></i>
+<span>Subscribe Now</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main View Container (Pre-rendered for direct file viewing and server viewing) -->
+<main id="app-view-container">
+<div class="view-section active-view" id="view-home-2">
+<section class="hero-wrapper" style="position: relative; background: linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.85)), url('./src/assets/hero_home2.png') center/cover no-repeat; padding: 6rem 0;">
+<div class="container text-center" style="position: relative; z-index: 1;">
+<span class="section-tag" style="background: rgba(255,255,255,0.95); color: var(--primary); border: none;"><i class="fa-solid fa-truck-ramp-box"></i> Fresh Delivery Network</span>
+<h1 class="hero-title" style="color: #ffffff !important;">Logistics &amp; Supply Chain</h1>
+<p class="hero-description" style="max-width: 700px; margin: 0 auto 2rem auto;color: #e2e8f0 !important;">
+            Our state-of-the-art cold chain logistics ensures every meal arrives at the classroom desk at the perfect temperature, preserving nutrition and taste.
+          </p>
+<button class="btn btn-primary" onclick="window.location.href='./admin-dashboard.html'">View Dispatch Dashboard</button>
+</div>
+</section>
+<section class="features-section">
+<div class="container">
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon-wrapper"><i class="fa-solid fa-temperature-arrow-down"></i></div>
+<h3>Cold Chain Integrity</h3>
+<p>GPS-tracked vans with constant temperature monitoring to guarantee food safety.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon-wrapper" style="background: var(--secondary-light); color: var(--secondary);"><i class="fa-solid fa-school"></i></div>
+<h3>45+ Partner Schools</h3>
+<p>Expanding network of schools trusting NourishKid for their daily catering needs.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon-wrapper" style="background: var(--accent-light); color: var(--accent);"><i class="fa-solid fa-clock-rotate-left"></i></div>
+<h3>Just-in-Time Prep</h3>
+<p>Meals are prepared hours before delivery to ensure maximum freshness.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Coverage Area -->
+<section class="features-section" style="background: var(--bg-card);">
+<div class="container text-center">
+<div class="section-header">
+<h2 class="section-title">Our Delivery Coverage</h2>
+<p class="section-subtitle">We currently serve over 45 schools across the metropolitan district with our fleet of 20+ cold-chain vans.</p>
+</div>
+<div style="background: var(--bg-primary); padding: 3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+<i class="fa-solid fa-map-location-dot" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+<h3>Expanding Daily</h3>
+<p>From Sector 1 to Sector 12, our logistics network ensures no school is left out.</p>
+</div>
+</div>
+</section>
+<!-- Safety Certifications -->
+<section class="features-section">
+<div class="container">
+<div class="section-header text-center">
+<h2 class="section-title">Certified Safe</h2><img src="./src/assets/veggie_pasta.jpg" style="width: 100%; max-width: 600px; border-radius: var(--radius-lg); margin: 2rem auto; display: block; box-shadow: var(--shadow-md);"/>
+</div>
+<div class="stats-bar">
+<div class="stat-box">
+<i class="fa-solid fa-certificate" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+<h3 style="color: white;">ISO 22000</h3>
+<p>Certified Food Safety Management</p>
+</div>
+<div class="stat-box">
+<i class="fa-solid fa-clipboard-check" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+<h3 style="color: white;">HACCP</h3>
+<p>Hazard Analysis and Critical Control Points</p>
+</div>
+<div class="stat-box">
+<i class="fa-solid fa-star" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+<h3 style="color: white;">A-Grade</h3>
+<p>Local Health Department Rating</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Success Metrics -->
+<section class="features-section" style="background: var(--bg-card);">
+<div class="container text-center">
+<h2 class="section-title">Logistics Impact</h2>
+<div class="hero-stats-row" style="margin-top: 2rem; background: var(--bg-primary); padding: 2rem; border-radius: var(--radius-lg);">
+<div class="stat-item">
+<h3 style="color: var(--primary);">99.8%</h3>
+<p>On-Time Desk Delivery</p>
+</div>
+<div class="stat-item">
+<h3 style="color: var(--secondary);">-40%</h3>
+<p>Reduction in Food Waste</p>
+</div>
+<div class="stat-item">
+<h3 style="color: var(--accent);">0</h3>
+<p>Cold-Chain Breaks</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Partner CTA -->
+<section class="hero-wrapper" style="background: var(--primary-light); padding: 4rem 1rem;">
+<div class="container text-center">
+<h2 class="hero-title" style="font-size: 2rem;">Bring NourishKid to Your School</h2>
+<p class="hero-description" style="max-width: 600px; margin: 0 auto 2rem auto;">
+            School administrators, upgrade your canteen operations with zero upfront capital expenditure.
+          </p>
+<button class="btn btn-primary">Schedule a Logistics Demo</button>
+</div>
+</section>
+</div><img alt="Delivery Van" src="./src/assets/delivery-van.jpg" style="width: 100%; height: 350px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: 2rem; border: 1px solid var(--border-color);"/>
+</main>
+<!-- Global Footer -->
+<footer class="site-footer">
+<div class="footer-container">
+<div class="footer-grid">
+<div class="footer-col brand-col">
+<div class="brand-logo footer-logo">
+<svg class="brand-logo-img" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<rect fill="url(#nk-bg-grad)" height="84" rx="24" width="84" x="8" y="8"></rect>
+<rect fill="#FFFFFF" fill-opacity="0.18" height="64" rx="16" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="2.5" width="64" x="18" y="18"></rect>
+<path d="M 18 50 L 82 50" stroke="#FFFFFF" stroke-dasharray="3 3" stroke-opacity="0.3" stroke-width="2.5"></path>
+<path d="M 50 50 L 50 82" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="2.5"></path>
+<path d="M 38 32 C 38 27 42 27 42 22" fill="none" opacity="0.9" stroke="#FFFFFF" stroke-linecap="round" stroke-width="3"></path>
+<path d="M 50 34 C 50 29 54 29 54 24" fill="none" opacity="0.9" stroke="#FFFFFF" stroke-linecap="round" stroke-width="3"></path>
+<path d="M 62 32 C 62 27 66 27 66 22" fill="none" opacity="0.9" stroke="#FFFFFF" stroke-linecap="round" stroke-width="3"></path>
+<g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(24, 56) scale(0.65)">
+<path d="M 10 25 L 10 12 C 10 6 16 6 16 12 L 16 25 M 13 25 L 13 36" fill="#FFFFFF"></path>
+<path d="M 26 8 L 26 18 M 30 8 L 30 18 M 34 8 L 34 18 M 26 18 C 26 24 34 24 34 18 M 30 24 L 30 36" fill="#FFFFFF"></path>
+</g>
+<g transform="translate(62, 10)">
+<path d="M 12 2 C 26 2 30 16 30 30 C 16 30 2 26 2 12 C 2 6 6 2 12 2 Z" fill="url(#nk-leaf-grad)" stroke="#FFFFFF" stroke-width="2"></path>
+<path d="M 12 2 Q 16 16 30 30" fill="none" opacity="0.8" stroke="#FFFFFF" stroke-linecap="round" stroke-width="2"></path>
+</g>
+</svg>
+<div class="logo-text">
+<span class="logo-title">Nourish<span class="highlight">Kid</span></span>
+<span class="logo-subtitle">Canteen &amp; Tiffin Subscription</span>
+</div>
+</div>
+<p class="footer-desc">
+            Empowering growing minds with freshly prepared, nutritionist-approved school lunches and effortless digital
+            canteen management for parents and schools.
+          </p>
+<div class="social-links">
+<a aria-label="Facebook" class="social-icon" href="#"><i class="fa-brands fa-facebook-f"></i></a>
+<a aria-label="Instagram" class="social-icon" href="#"><i class="fa-brands fa-instagram"></i></a>
+<a aria-label="LinkedIn" class="social-icon" href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+<a aria-label="YouTube" class="social-icon" href="#"><i class="fa-brands fa-youtube"></i></a>
+</div>
+</div>
+<div class="footer-col">
+<h4 class="footer-heading">Quick Links</h4>
+<ul class="footer-links">
+<li><a class="view-trigger" href="./index.html"><i class="fa-solid fa-angle-right"></i>
+                Home 1 (Overview)</a></li>
+<li><a class="view-trigger" href="./home2.html"><i class="fa-solid fa-angle-right"></i>
+                Home 2 (Fresh Delivery)</a></li>
+<li><a class="view-trigger" href="./about.html"><i class="fa-solid fa-angle-right"></i>
+                About Our Kitchen</a></li>
+<li><a class="view-trigger" href="./services.html"><i class="fa-solid fa-angle-right"></i> School Services</a></li>
+<li><a class="view-trigger" href="./faq.html"><i class="fa-solid fa-angle-right"></i> FAQ &amp; Support</a></li>
+<li><a class="view-trigger" href="./nutrition.html"><i class="fa-solid fa-angle-right"></i> Nutrition &amp; Sourcing</a></li>
+<li><a class="view-trigger" href="./contact.html"><i class="fa-solid fa-angle-right"></i> Contact &amp; Help</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4 class="footer-heading">Portals &amp; Services</h4>
+<ul class="footer-links">
+<li><a href="./parent-dashboard.html"><i class="fa-solid fa-angle-right"></i> Parent Meal Portal</a></li>
+<li><a href="./admin-dashboard.html"><i class="fa-solid fa-angle-right"></i> Canteen Admin Portal</a></li>
+<li><a href="#" id="footer-weekly-plan-btn"><i class="fa-solid fa-angle-right"></i> Custom Weekly Meal
+                Planner</a></li>
+<li><a href="#" id="footer-rfid-wallet-btn"><i class="fa-solid fa-angle-right"></i> RFID Wallet Balance
+                Top-Up</a></li>
+<li><a href="#" id="footer-school-partner-btn"><i class="fa-solid fa-angle-right"></i> Partner School
+                Portal</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4 class="footer-heading">Central Kitchen Info</h4>
+<ul class="contact-info">
+<li><i class="fa-solid fa-location-dot"></i> 452 Culinary Way, Fresh Park, Sector 4</li>
+<li><i class="fa-solid fa-phone"></i> +1 (800) 555-NOURISH</li>
+<li><i class="fa-solid fa-envelope"></i> care@nourishkid.com</li>
+<li><i class="fa-solid fa-shield-halved"></i> ISO 22000 Certified Kitchen</li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2026 NourishKid Subscription Services Inc. All rights reserved.</p>
+<div class="bottom-links">
+<a href="#">Privacy Policy</a>
+<span>•</span>
+<a href="#">Terms of Service</a>
+<span>•</span>
+<a href="#">Allergen Policy</a>
+<span>•</span>
+<a href="#">Food Hygiene Audit</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Modal: Quick Subscription Builder -->
+<div class="modal-backdrop" id="subscribe-modal">
+<div class="modal-card">
+<button class="modal-close" id="modal-close-btn">×</button>
+<div class="modal-header">
+<div class="modal-icon"><i class="fa-solid fa-box-open"></i></div>
+<div>
+<h3 class="modal-title">Subscribe to Weekly Tiffin Plan</h3>
+<p class="modal-subtitle">Choose your plan, student school &amp; allergy settings</p>
+</div>
+</div>
+<div class="modal-body">
+<form id="subscribe-form">
+<div class="form-grid">
+<div class="form-group">
+<label for="modal-student-name">Student Full Name</label>
+<input class="form-input" id="modal-student-name" placeholder="e.g. Liam Davis" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="modal-school-name">School / College</label>
+<select class="form-select" id="modal-school-name" required="">
+<option value="Saint Jude Academy">Saint Jude Academy</option>
+<option value="Oakridge International">Oakridge International</option>
+<option value="Greenwood High School">Greenwood High School</option>
+<option value="Cambridge Prep School">Cambridge Prep School</option>
+</select>
+</div>
+<div class="form-group">
+<label for="modal-grade">Grade &amp; Section</label>
+<input class="form-input" id="modal-grade" placeholder="e.g. Grade 5 - Section B" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="modal-plan-tier">Meal Plan Tier</label>
+<select class="form-select" id="modal-plan-tier" required="">
+<option value="NutriPlus Balanced Plan - $49/wk">NutriPlus Balanced ($49/week)</option>
+<option value="Chef Special Organic Tiffin - $69/wk">Chef Special Organic ($69/week)</option>
+<option value="Junior Lite Snack Plan - $29/wk">Junior Lite Snack ($29/week)</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label>Dietary Restrictions / Allergies</label>
+<div class="checkbox-group">
+<label class="checkbox-label"><input checked="" name="allergy" type="checkbox" value="Nut-Free"/>
+                Nut-Free</label>
+<label class="checkbox-label"><input name="allergy" type="checkbox" value="Gluten-Free"/>
+                Gluten-Free</label>
+<label class="checkbox-label"><input name="allergy" type="checkbox" value="Dairy-Free"/> Dairy-Free</label>
+<label class="checkbox-label"><input name="allergy" type="checkbox" value="Jain/Halal"/>
+                Halal/Vegetarian</label>
+</div>
+</div>
+<div class="modal-summary">
+<div class="summary-item"><span>Total Weekly Billing:</span> <strong id="modal-summary-price">$49.00 /
+                week</strong></div>
+<div class="summary-item"><span>Delivery Desk:</span> <span>Classroom Tiffin Rack #4</span></div>
+</div>
+<button class="btn btn-primary btn-block" type="submit">Confirm Subscription &amp; Start Next Week</button>
+</form>
+</div>
+</div>
+</div>
+<!-- Toast Notification Container -->
+<div class="toast-container" id="toast-container"></div>
+<script src="./src/main.js"></script>
+</body>
+</html>

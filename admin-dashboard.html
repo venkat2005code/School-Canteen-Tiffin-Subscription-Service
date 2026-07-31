@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - NourishKid</title>
+  <link rel="stylesheet" href="./src/style.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    /* Dashboard specific layout variables */
+    :root {
+      --sidebar-width: 290px;
+      --sidebar-collapsed-width: 80px;
+      --topbar-height: 70px;
+      --dashboard-bg: var(--bg-primary);
+      --panel-bg: var(--bg-card);
+      --transition-speed: 0.3s;
+    }
+
+    [data-theme="dark"] {
+      --dashboard-bg: #121418;
+      --panel-bg: #1e2229;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--dashboard-bg);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    /* Dashboard Layout */
+    .dashboard-layout {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--panel-bg);
+      border-right: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 1000;
+      transition: width var(--transition-speed) ease;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    
+    .sidebar.collapsed {
+      width: var(--sidebar-collapsed-width);
+    }
+    
+    [dir="rtl"] .sidebar {
+      left: auto;
+      right: 0;
+      border-right: none;
+      border-left: 1px solid var(--border);
+    }
+
+    .sidebar-header {
+      height: var(--topbar-height);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--panel-bg);
+      z-index: 10;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--text-main);
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .sidebar-logo span {
+      white-space: normal;
+      min-width: 0; /* allows text to wrap or truncate in flex */
+      overflow: hidden;
+    }
+    
+    .sidebar-logo strong {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      width: 100%;
+    }
+
+    .sidebar-logo img {
+      height: 32px;
+    }
+    
+    .sidebar.collapsed .sidebar-logo span {
+      display: none;
+    }
+
+    .sidebar-nav {
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sidebar-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem 1rem;
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .sidebar-nav-item:hover, .sidebar-nav-item.active {
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .sidebar-nav-item i {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+    }
+
+    .sidebar.collapsed .sidebar-nav-item span {
+      display: none;
+    }
+    
+    .sidebar.collapsed .sidebar-nav-item {
+      justify-content: center;
+      padding: 0.8rem 0;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left var(--transition-speed) ease;
+      min-width: 0;
+    }
+    
+    .main-content.expanded {
+      margin-left: var(--sidebar-collapsed-width);
+    }
+
+    [dir="rtl"] .main-content {
+      margin-left: 0;
+      margin-right: var(--sidebar-width);
+    }
+    
+    [dir="rtl"] .main-content.expanded {
+      margin-right: var(--sidebar-collapsed-width);
+    }
+
+    /* Topbar */
+    .topbar {
+      height: var(--topbar-height);
+      background-color: var(--panel-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .toggle-sidebar-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s;
+    }
+
+    .toggle-sidebar-btn:hover {
+      background: var(--bg-primary);
+      color: var(--text-main);
+    }
+
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .breadcrumbs span {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .search-bar {
+      position: relative;
+    }
+
+    .search-bar i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    
+    [dir="rtl"] .search-bar i {
+      left: auto;
+      right: 1rem;
+    }
+
+    .search-bar input {
+      padding: 0.6rem 1rem 0.6rem 2.5rem;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background: var(--bg-primary);
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.9rem;
+      width: 250px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    
+    [dir="rtl"] .search-bar input {
+      padding: 0.6rem 2.5rem 0.6rem 1rem;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .topbar-icon-btn {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .topbar-icon-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary-light);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background: var(--accent);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 2px solid var(--panel-bg);
+    }
+
+    .user-profile-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: var(--radius-full);
+      transition: background 0.2s;
+    }
+    
+    .user-profile-btn:hover {
+      background: var(--bg-primary);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .user-role {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Dashboard Container */
+    .dashboard-container {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Section Styling */
+    .dash-section {
+      padding-top: 100px; /* Offset for scrollspy due to sticky header */
+      margin-top: -100px;
+      margin-bottom: 3rem;
+    }
+
+    .section-title-dash {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Cards & Grids */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      background: var(--panel-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .kpi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .kpi-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    
+    .icon-primary { background: var(--primary-light); color: var(--primary); }
+    .icon-secondary { background: var(--secondary-light); color: var(--secondary); }
+    .icon-accent { background: var(--accent-light); color: var(--accent); }
+    .icon-info { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+
+    .kpi-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    
+    .kpi-trend {
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    .trend-up { color: var(--primary); }
+    .trend-down { color: var(--accent); }
+    .trend-neutral { color: var(--text-muted); }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .dashboard-grid-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid, .dashboard-grid-equal {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dash-panel {
+      background: var(--panel-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+    }
+    
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .panel-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    /* Data Tables */
+    .dash-table-wrapper {
+      overflow-x: auto;
+    }
+    
+    .dash-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .dash-table th {
+      text-align: left;
+      padding: 1rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
+    }
+    
+    [dir="rtl"] .dash-table th {
+      text-align: right;
+    }
+    
+    .dash-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      vertical-align: middle;
+    }
+    
+    .dash-table tbody tr:hover {
+      background: var(--bg-primary);
+    }
+
+    /* Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    
+    .status-success { background: var(--primary-light); color: var(--primary); }
+    .status-warning { background: var(--secondary-light); color: var(--secondary); }
+    .status-danger { background: var(--accent-light); color: var(--accent); }
+    .status-info { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+
+    /* Button variants for dashboard */
+    .btn-sm {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+    }
+
+    .btn-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--bg-primary);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-icon:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary-light);
+    }
+
+    /* FAB */
+    .fab-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+
+    [dir="rtl"] .fab-container {
+      right: auto;
+      left: 2rem;
+      align-items: flex-start;
+    }
+
+    .fab-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .fab-container.active .fab-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .fab-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--panel-bg);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-md);
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    [dir="rtl"] .fab-item {
+      flex-direction: row-reverse;
+    }
+
+    .fab-item:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      transform: scale(1.05);
+    }
+
+    .fab-main {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.3s ease, background 0.3s;
+    }
+
+    .fab-main:hover {
+      background: #c54a26;
+    }
+
+    .fab-container.active .fab-main {
+      transform: rotate(45deg);
+      background: var(--accent);
+    }
+
+    /* Back to Top */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: var(--panel-bg);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+    
+    [dir="rtl"] .back-to-top {
+      left: auto;
+      right: 2rem;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Menu Grid Editor */
+    .menu-grid-editor {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .menu-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu-card-img {
+      height: 140px;
+      width: 100%;
+      object-fit: cover;
+      position: relative;
+    }
+
+    .menu-card-category {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .menu-card-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+    }
+
+    .menu-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .menu-card-meta {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .menu-card-footer {
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-primary);
+    }
+
+    /* Kanban Board */
+    .kanban-board {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+    }
+
+    .kanban-column {
+      min-width: 300px;
+      background: var(--bg-primary);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .kanban-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kanban-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex: 1;
+      min-height: 200px;
+    }
+
+    .kanban-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      box-shadow: var(--shadow-sm);
+      cursor: grab;
+    }
+
+    .kanban-card-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin: 0 0 0.5rem 0;
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: 1rem;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      .breadcrumbs {
+        display: none !important;
+      }
+      .dash-panel {
+        padding: 1rem;
+        width: 100%;
+        overflow-x: hidden;
+      }
+      
+      .panel-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+      .panel-header > h3 {
+        margin-bottom: 0;
+      }
+      .panel-header > div {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem !important;
+      }
+      .panel-header .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="./index.html" class="sidebar-logo">
+          
+          <span style="display: flex; flex-direction: column; line-height: 1.1;">
+            NourishKid
+            <strong style="font-weight: 500; font-size: 0.65rem; color: var(--text-muted); margin-top: 2px;">Canteen & Tiffin Service</strong>
+          </span>
+        </a>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="#admin-overview" class="sidebar-nav-item active" data-scrollspy>
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Overview</span>
+        </a>
+        <a href="#menu-management" class="sidebar-nav-item" data-scrollspy>
+          <i class="fa-solid fa-bell-concierge"></i>
+          <span>Menu Management</span>
+        </a>
+        <a href="#subscription-management" class="sidebar-nav-item" data-scrollspy>
+          <i class="fa-solid fa-users"></i>
+          <span>Subscriptions</span>
+        </a>
+        <a href="#kitchen-orders" class="sidebar-nav-item" data-scrollspy>
+          <i class="fa-solid fa-kitchen-set"></i>
+          <span>Kitchen & Orders</span>
+        </a>
+        <a href="#billing-operations" class="sidebar-nav-item" data-scrollspy>
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <span>Billing & Operations</span>
+        </a>
+        <a href="#reports-settings" class="sidebar-nav-item" data-scrollspy>
+          <i class="fa-solid fa-gear"></i>
+          <span>Reports & Settings</span>
+        </a>
+      </nav>
+      <div style="margin-top: auto; padding: 1.5rem 1rem; border-top: 1px solid var(--border);">
+        <style>
+          .logout-btn { color: #ef4444 !important; }
+          .logout-btn:hover { background-color: #fee2e2 !important; color: #dc2626 !important; }
+          [data-theme="dark"] .logout-btn:hover { background-color: rgba(239, 68, 68, 0.15) !important; color: #f87171 !important; }
+        </style>
+        <a href="./index.html" class="sidebar-nav-item logout-btn">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Log Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+      
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="toggle-sidebar-btn" id="toggle-sidebar" aria-label="Toggle Sidebar">
+            <i class="fa-solid fa-bars-staggered"></i>
+          </button>
+          <div class="breadcrumbs">
+            Admin <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem;"></i> <span id="current-section-title">Overview</span>
+          </div>
+        </div>
+        
+        <div class="topbar-right">
+          <div class="search-bar">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search orders, users..." />
+          </div>
+          
+          <button class="topbar-icon-btn" id="theme-toggle" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          
+          <button class="topbar-icon-btn" id="rtl-toggle" aria-label="Toggle RTL">
+            <i class="fa-solid fa-language"></i>
+          </button>
+          
+          <div class="notification-wrapper" id="notif-wrapper">
+            <button class="topbar-icon-btn" id="notif-btn" aria-label="Notifications" onclick="toggleNotifications(event)">
+              <i class="fa-regular fa-bell"></i>
+              <span class="notification-badge">5</span>
+            </button>
+            
+            <div class="notification-dropdown" id="notif-dropdown">
+              <div class="dropdown-header">
+                <h4>Notifications</h4>
+                <a href="#" style="font-size: 0.8rem; color: var(--primary); text-decoration: none;">Mark all read</a>
+              </div>
+              <div class="notification-list">
+                <div class="notification-item unread">
+                  <div class="notification-icon" style="background: var(--primary-light); color: var(--primary);"><i class="fa-solid fa-box"></i></div>
+                  <div class="notification-content">
+                    <p>New bulk order placed by St. Mary's High School.</p>
+                    <span>10 mins ago</span>
+                  </div>
+                </div>
+                <div class="notification-item unread">
+                  <div class="notification-icon" style="background: var(--info-light); color: var(--info);"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                  <div class="notification-content">
+                    <p>Kitchen alert: Low stock on fresh tomatoes.</p>
+                    <span>1 hour ago</span>
+                  </div>
+                </div>
+                <div class="notification-item">
+                  <div class="notification-icon" style="background: var(--accent-light); color: var(--accent);"><i class="fa-solid fa-calendar-check"></i></div>
+                  <div class="notification-content">
+                    <p>Weekly menu approved for next week.</p>
+                    <span>2 days ago</span>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown-footer">
+                <a href="#">View all alerts</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="user-profile-btn">
+            <div class="user-avatar"><i class="fa-solid fa-user-tie"></i></div>
+            <div class="user-info">
+              <span class="user-name">Sys Admin</span>
+              <span class="user-role">Superuser</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Sections -->
+      <div class="dashboard-container">
+        
+        <!-- Section 1: Overview -->
+        <section id="admin-overview" class="dash-section">
+          <h2 class="section-title-dash"><i class="fa-solid fa-chart-line"></i> Operations Overview</h2>
+          
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span>Active Subscriptions</span>
+                <div class="kpi-icon icon-primary"><i class="fa-solid fa-users"></i></div>
+              </div>
+              <div class="kpi-value">2,845</div>
+              <div class="kpi-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +12% this month</div>
+            </div>
+            
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span>Today's Orders</span>
+                <div class="kpi-icon icon-secondary"><i class="fa-solid fa-box"></i></div>
+              </div>
+              <div class="kpi-value">3,120</div>
+              <div class="kpi-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +4% from yesterday</div>
+            </div>
+            
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span>Revenue (MTD)</span>
+                <div class="kpi-icon icon-accent"><i class="fa-solid fa-dollar-sign"></i></div>
+              </div>
+              <div class="kpi-value">$142.5k</div>
+              <div class="kpi-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +8% vs last month</div>
+            </div>
+            
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span>Pending Deliveries</span>
+                <div class="kpi-icon icon-info"><i class="fa-solid fa-truck-fast"></i></div>
+              </div>
+              <div class="kpi-value">45</div>
+              <div class="kpi-trend trend-neutral"><i class="fa-solid fa-minus"></i> On schedule</div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="dash-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Revenue Growth</h3>
+                <button class="btn-icon"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              </div>
+              <div style="position: relative; height: 250px; width: 100%;">
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+            
+            <div class="dash-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Subscription Plans</h3>
+              </div>
+              <div style="position: relative; height: 250px; width: 100%;">
+                <canvas id="subscriptionsChart"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dashboard-grid-equal">
+            <div class="dash-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Daily Order Volume</h3>
+              </div>
+              <div style="position: relative; height: 200px; width: 100%;">
+                <canvas id="ordersChart"></canvas>
+              </div>
+            </div>
+            <div class="dash-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Meal Popularity (Top 5)</h3>
+              </div>
+              <div style="position: relative; height: 200px; width: 100%;">
+                <canvas id="popularityChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Menu Management -->
+        <section id="menu-management" class="dash-section">
+          <h2 class="section-title-dash"><i class="fa-solid fa-bell-concierge"></i> Menu Management</h2>
+          
+          <div class="dash-panel">
+            <div class="panel-header">
+              <h3 class="panel-title">Active Menu Items</h3>
+              <div>
+                <button class="btn btn-outline btn-sm">Filter</button>
+                <button class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Add Item</button>
+              </div>
+            </div>
+            
+            <div class="menu-grid-editor">
+              <!-- Item 1 -->
+              <div class="menu-card">
+                <div class="menu-card-img">
+                  
+                  <span class="menu-card-category">Lunch</span>
+                </div>
+                <div class="menu-card-body">
+                  <h4 class="menu-card-title">Teriyaki Chicken Rice Bowl</h4>
+                  <div class="menu-card-meta">
+                    <span>520 kcal</span>
+                    <span>$11.50</span>
+                    <span class="status-badge status-success">Available</span>
+                  </div>
+                </div>
+                <div class="menu-card-footer">
+                  <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-solid fa-shield-halved"></i> Nut-Free</span>
+                  <div>
+                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Item 2 -->
+              <div class="menu-card">
+                <div class="menu-card-img">
+                  
+                  <span class="menu-card-category">Lunch</span>
+                </div>
+                <div class="menu-card-body">
+                  <h4 class="menu-card-title">Organic Veggie & Cheese Pasta</h4>
+                  <div class="menu-card-meta">
+                    <span>480 kcal</span>
+                    <span>$10.00</span>
+                    <span class="status-badge status-success">Available</span>
+                  </div>
+                </div>
+                <div class="menu-card-footer">
+                  <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-solid fa-leaf"></i> Vegetarian</span>
+                  <div>
+                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="menu-card">
+                <div class="menu-card-img">
+                  
+                  <span class="menu-card-category">Drinks</span>
+                </div>
+                <div class="menu-card-body">
+                  <h4 class="menu-card-title">Superberry Protein Smoothie</h4>
+                  <div class="menu-card-meta">
+                    <span>220 kcal</span>
+                    <span>$5.50</span>
+                    <span class="status-badge status-warning">Low Stock</span>
+                  </div>
+                </div>
+                <div class="menu-card-footer">
+                  <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-solid fa-leaf"></i> Vegan</span>
+                  <div>
+                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: Subscription Management -->
+        <section id="subscription-management" class="dash-section">
+          <h2 class="section-title-dash"><i class="fa-solid fa-users"></i> Subscription Management</h2>
+          
+          <div class="dash-panel">
+            <div class="panel-header">
+              <h3 class="panel-title">Recent Subscriptions</h3>
+              <button class="btn btn-outline btn-sm">Export CSV</button>
+            </div>
+            
+            <div class="dash-table-wrapper">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Student Name</th>
+                    <th>School</th>
+                    <th>Plan Tier</th>
+                    <th>Status</th>
+                    <th>Renewal Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Liam Davis</strong></td>
+                    <td>Saint Jude Academy</td>
+                    <td>NutriPlus Balanced</td>
+                    <td><span class="status-badge status-success">Active</span></td>
+                    <td>Aug 5, 2026</td>
+                    <td><button class="btn-icon"><i class="fa-solid fa-eye"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Emma Wilson</strong></td>
+                    <td>Oakridge Int.</td>
+                    <td>Chef Special Organic</td>
+                    <td><span class="status-badge status-success">Active</span></td>
+                    <td>Aug 12, 2026</td>
+                    <td><button class="btn-icon"><i class="fa-solid fa-eye"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Noah Smith</strong></td>
+                    <td>Greenwood High</td>
+                    <td>Junior Snack & Lunch</td>
+                    <td><span class="status-badge status-warning">Expiring Soon</span></td>
+                    <td>Aug 1, 2026</td>
+                    <td><button class="btn-icon"><i class="fa-solid fa-eye"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Olivia Brown</strong></td>
+                    <td>Cambridge Prep</td>
+                    <td>NutriPlus Balanced</td>
+                    <td><span class="status-badge status-danger">Paused</span></td>
+                    <td>-</td>
+                    <td><button class="btn-icon"><i class="fa-solid fa-eye"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Kitchen & Orders -->
+        <section id="kitchen-orders" class="dash-section">
+          <h2 class="section-title-dash"><i class="fa-solid fa-kitchen-set"></i> Kitchen & Production Board</h2>
+          
+          <div class="kanban-board">
+            <div class="kanban-column">
+              <div class="kanban-header">
+                <span>Pending Prep</span>
+                <span class="status-badge status-info">450</span>
+              </div>
+              <div class="kanban-body">
+                <div class="kanban-card">
+                  <h4 class="kanban-card-title">Batch #42 - Veggie Pasta</h4>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">Qty: 150 | Due: 9:30 AM</div>
+                  <div class="progress-bar-bg" style="background: var(--border); height: 4px; border-radius: 2px;">
+                    <div style="background: var(--info); width: 0%; height: 100%; border-radius: 2px;"></div>
+                  </div>
+                </div>
+                <div class="kanban-card">
+                  <h4 class="kanban-card-title">Batch #43 - Smoothies</h4>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">Qty: 300 | Due: 10:00 AM</div>
+                  <div class="progress-bar-bg" style="background: var(--border); height: 4px; border-radius: 2px;">
+                    <div style="background: var(--info); width: 0%; height: 100%; border-radius: 2px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kanban-column">
+              <div class="kanban-header">
+                <span>Preparing</span>
+                <span class="status-badge status-warning">320</span>
+              </div>
+              <div class="kanban-body">
+                <div class="kanban-card" style="border-left: 3px solid var(--secondary);">
+                  <h4 class="kanban-card-title">Batch #40 - Teriyaki Chicken</h4>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">Qty: 320 | Due: 9:00 AM</div>
+                  <div class="progress-bar-bg" style="background: var(--border); height: 4px; border-radius: 2px;">
+                    <div style="background: var(--secondary); width: 65%; height: 100%; border-radius: 2px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kanban-column">
+              <div class="kanban-header">
+                <span>Packing</span>
+                <span class="status-badge status-primary">850</span>
+              </div>
+              <div class="kanban-body">
+                <div class="kanban-card" style="border-left: 3px solid var(--primary);">
+                  <h4 class="kanban-card-title">Route A - Saint Jude</h4>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">Qty: 450 | Dispatch: 10:30 AM</div>
+                  <div class="progress-bar-bg" style="background: var(--border); height: 4px; border-radius: 2px;">
+                    <div style="background: var(--primary); width: 80%; height: 100%; border-radius: 2px;"></div>
+                  </div>
+                </div>
+                <div class="kanban-card" style="border-left: 3px solid var(--primary);">
+                  <h4 class="kanban-card-title">Route B - Oakridge</h4>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">Qty: 400 | Dispatch: 10:45 AM</div>
+                  <div class="progress-bar-bg" style="background: var(--border); height: 4px; border-radius: 2px;">
+                    <div style="background: var(--primary); width: 40%; height: 100%; border-radius: 2px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kanban-column">
+              <div class="kanban-header">
+                <span>Out for Delivery</span>
+                <span class="status-badge status-success">1,500</span>
+              </div>
+              <div class="kanban-body">
+                <div class="kanban-card" style="border-left: 3px solid var(--primary-light);">
+                  <h4 class="kanban-card-title">Route C - Greenwood</h4>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">Status: In Transit (ETA 15m)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Billing & Operations -->
+        <section id="billing-operations" class="dash-section">
+          <h2 class="section-title-dash"><i class="fa-solid fa-file-invoice-dollar"></i> Billing & Operations</h2>
+          
+          <div class="dashboard-grid">
+            <div class="dash-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Recent Transactions</h3>
+                <button class="btn btn-outline btn-sm">View All</button>
+              </div>
+              <div class="dash-table-wrapper">
+                <table class="dash-table">
+                  <thead>
+                    <tr>
+                      <th>Txn ID</th>
+                      <th>Date</th>
+                      <th>Customer</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>#TX-9982</td>
+                      <td>Jul 29, 2026</td>
+                      <td>John Davis</td>
+                      <td>$196.00</td>
+                      <td><span class="status-badge status-success">Paid</span></td>
+                    </tr>
+                    <tr>
+                      <td>#TX-9981</td>
+                      <td>Jul 29, 2026</td>
+                      <td>Sarah Wilson</td>
+                      <td>$276.00</td>
+                      <td><span class="status-badge status-success">Paid</span></td>
+                    </tr>
+                    <tr>
+                      <td>#TX-9980</td>
+                      <td>Jul 28, 2026</td>
+                      <td>Mike Smith</td>
+                      <td>$116.00</td>
+                      <td><span class="status-badge status-warning">Pending</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div class="dash-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Expense Breakdown</h3>
+              </div>
+              <div style="position: relative; height: 250px; width: 100%;">
+                <canvas id="expensesChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6: Reports & Settings -->
+        <section id="reports-settings" class="dash-section">
+          <h2 class="section-title-dash"><i class="fa-solid fa-gear"></i> Reports & System Settings</h2>
+          
+          <div class="dashboard-grid-equal">
+            <div class="dash-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">System Configuration</h3>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);">
+                  <div>
+                    <strong>Accept New Subscriptions</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Enable or disable new user signups</div>
+                  </div>
+                  <div class="status-badge status-success">Enabled</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);">
+                  <div>
+                    <strong>Automated SMS Alerts</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Send delivery notifications to parents</div>
+                  </div>
+                  <div class="status-badge status-success">Enabled</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem;">
+                  <div>
+                    <strong>Maintenance Mode</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Take parent portal offline for updates</div>
+                  </div>
+                  <div class="status-badge status-danger">Disabled</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="dash-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Quick Reports Export</h3>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <button class="btn btn-outline" style="justify-content: flex-start;"><i class="fa-solid fa-file-excel" style="color: var(--primary);"></i> Monthly Financial Summary (.xlsx)</button>
+                <button class="btn btn-outline" style="justify-content: flex-start;"><i class="fa-solid fa-file-pdf" style="color: var(--accent);"></i> Kitchen Waste & Production Audit (.pdf)</button>
+                <button class="btn btn-outline" style="justify-content: flex-start;"><i class="fa-solid fa-file-csv" style="color: var(--secondary);"></i> Active Subscribers List (.csv)</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to Top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- FAB Menu -->
+  <div class="fab-container" id="fab-container">
+    <div class="fab-menu">
+      <a href="#" class="fab-item"><i class="fa-solid fa-plus"></i> Add Menu Item</a>
+      <a href="#" class="fab-item"><i class="fa-solid fa-user-plus"></i> Add User</a>
+      <a href="#" class="fab-item"><i class="fa-solid fa-file-invoice"></i> Generate Invoice</a>
+      <a href="#" class="fab-item"><i class="fa-solid fa-bullhorn"></i> New Announcement</a>
+    </div>
+    <button class="fab-main" id="fab-main" aria-label="Quick Actions">
+      <i class="fa-solid fa-plus"></i>
+    </button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Setup Theme & RTL
+      const htmlEl = document.documentElement;
+      
+      const savedTheme = localStorage.getItem('nk_theme') || 'light';
+      htmlEl.setAttribute('data-theme', savedTheme);
+      
+      const savedDir = localStorage.getItem('nk_dir') || 'ltr';
+      htmlEl.setAttribute('dir', savedDir);
+
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+        
+        themeToggle.addEventListener('click', () => {
+          const current = htmlEl.getAttribute('data-theme');
+          const next = current === 'light' ? 'dark' : 'light';
+          htmlEl.setAttribute('data-theme', next);
+          localStorage.setItem('nk_theme', next);
+          themeToggle.innerHTML = next === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+          initCharts(); // Re-render charts with new theme colors
+        });
+      }
+
+      const rtlToggle = document.getElementById('rtl-toggle');
+      if (rtlToggle) {
+        rtlToggle.addEventListener('click', () => {
+          const current = htmlEl.getAttribute('dir');
+          const next = current === 'ltr' ? 'rtl' : 'ltr';
+          htmlEl.setAttribute('dir', next);
+          localStorage.setItem('nk_dir', next);
+        });
+      }
+
+      // Sidebar Toggle
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('main-content');
+      const toggleBtn = document.getElementById('toggle-sidebar');
+      
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          sidebar.classList.toggle('collapsed');
+          mainContent.classList.toggle('expanded');
+        });
+      }
+
+      // ScrollSpy functionality
+      const sections = document.querySelectorAll('.dash-section');
+      const navItems = document.querySelectorAll('[data-scrollspy]');
+      const titleEl = document.getElementById('current-section-title');
+
+      const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            
+            navItems.forEach(item => {
+              item.classList.remove('active');
+              if (item.getAttribute('href') === `#${id}`) {
+                item.classList.add('active');
+                if (titleEl) {
+                  titleEl.textContent = item.querySelector('span').textContent;
+                }
+              }
+            });
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => observer.observe(section));
+
+      // Smooth scroll for nav items
+      navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = item.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          if (targetSection) {
+            window.scrollTo({
+              top: targetSection.offsetTop - 50,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      // FAB Toggle
+      const fabContainer = document.getElementById('fab-container');
+      const fabMain = document.getElementById('fab-main');
+      if (fabMain) {
+        fabMain.addEventListener('click', () => {
+          fabContainer.classList.toggle('active');
+        });
+      }
+
+      // Back to top
+      const backToTopBtn = document.getElementById('back-to-top');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          backToTopBtn.classList.add('visible');
+        } else {
+          backToTopBtn.classList.remove('visible');
+        }
+      });
+      
+      if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Initialize Charts
+      let charts = {};
+      
+      function initCharts() {
+        const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+        
+        const textColor = isDark ? '#e2e8f0' : '#1e293b';
+        const gridColor = isDark ? '#334155' : '#e2e8f0';
+        
+        Chart.defaults.color = textColor;
+        Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+        
+        const commonOptions = {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: textColor }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: gridColor },
+              ticks: { color: textColor }
+            },
+            y: {
+              grid: { color: gridColor },
+              ticks: { color: textColor }
+            }
+          }
+        };
+
+        // Destroy existing before creating new ones to support theme switching
+        Object.values(charts).forEach(chart => chart.destroy());
+
+        // 1. Revenue Line Chart
+        const ctxRev = document.getElementById('revenueChart');
+        if (ctxRev) {
+          charts.revenue = new Chart(ctxRev, {
+            type: 'line',
+            data: {
+              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+              datasets: [{
+                label: 'Monthly Revenue ($)',
+                data: [110000, 115000, 122000, 128000, 134000, 138000, 142500],
+                borderColor: '#E05D38',
+                backgroundColor: 'rgba(224, 93, 56, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#E05D38'
+              }]
+            },
+            options: commonOptions
+          });
+        }
+
+        // 2. Subscriptions Doughnut
+        const ctxSub = document.getElementById('subscriptionsChart');
+        if (ctxSub) {
+          charts.subscriptions = new Chart(ctxSub, {
+            type: 'doughnut',
+            data: {
+              labels: ['NutriPlus', 'Chef Special', 'Junior Lite'],
+              datasets: [{
+                data: [1800, 645, 400],
+                backgroundColor: ['#E05D38', '#F59E0B', '#34D399'],
+                borderWidth: 0,
+                hoverOffset: 4
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: 'bottom', labels: { color: textColor } }
+              },
+              cutout: '70%'
+            }
+          });
+        }
+
+        // 3. Orders Bar Chart
+        const ctxOrd = document.getElementById('ordersChart');
+        if (ctxOrd) {
+          charts.orders = new Chart(ctxOrd, {
+            type: 'bar',
+            data: {
+              labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+              datasets: [{
+                label: 'Meals Ordered',
+                data: [3150, 3120, 3200, 3180, 3100],
+                backgroundColor: '#34D399',
+                borderRadius: 4
+              }]
+            },
+            options: commonOptions
+          });
+        }
+
+        // 4. Popularity Chart (Area)
+        const ctxPop = document.getElementById('popularityChart');
+        if (ctxPop) {
+          charts.popularity = new Chart(ctxPop, {
+            type: 'polarArea',
+            data: {
+              labels: ['Teriyaki Chicken', 'Veggie Pasta', 'Mac & Cheese', 'Tacos', 'Fish & Chips'],
+              datasets: [{
+                data: [950, 820, 600, 450, 300],
+                backgroundColor: [
+                  'rgba(224, 93, 56, 0.7)',
+                  'rgba(245, 158, 11, 0.7)',
+                  'rgba(52, 211, 153, 0.7)',
+                  'rgba(59, 130, 246, 0.7)',
+                  'rgba(168, 85, 247, 0.7)'
+                ]
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: 'right', labels: { color: textColor } }
+              },
+              scales: {
+                r: {
+                  grid: { color: gridColor },
+                  ticks: { display: false }
+                }
+              }
+            }
+          });
+        }
+        
+        // 5. Expenses Pie
+        const ctxExp = document.getElementById('expensesChart');
+        if (ctxExp) {
+          charts.expenses = new Chart(ctxExp, {
+            type: 'pie',
+            data: {
+              labels: ['Ingredients', 'Staff', 'Logistics', 'Marketing', 'Admin'],
+              datasets: [{
+                data: [45, 25, 15, 10, 5],
+                backgroundColor: [
+                  '#E05D38', '#F59E0B', '#34D399', '#3B82F6', '#64748B'
+                ],
+                borderWidth: 0
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: 'right', labels: { color: textColor } }
+              }
+            }
+          });
+        }
+      }
+
+      // Initial Chart Render
+      initCharts();
+    });
+
+    // Toggle Notifications
+    function toggleNotifications(event) {
+      event.stopPropagation();
+      const dropdown = document.getElementById('notif-dropdown');
+      if (dropdown) {
+        dropdown.classList.toggle('show');
+      }
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+      const notifWrapper = document.getElementById('notif-wrapper');
+      const notifDropdown = document.getElementById('notif-dropdown');
+      if (notifWrapper && notifDropdown) {
+        if (!notifWrapper.contains(e.target)) {
+          notifDropdown.classList.remove('show');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+

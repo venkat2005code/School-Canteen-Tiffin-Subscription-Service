@@ -1,0 +1,195 @@
+import os
+
+new_css = """
+/* ==========================================================================
+   NEW LAYOUT UTILITIES
+   ========================================================================== */
+
+/* Split Layout */
+.split-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .split-layout {
+    flex-direction: row;
+    gap: 4rem;
+  }
+  .split-layout > * {
+    flex: 1;
+  }
+}
+.split-image-container {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--border-color);
+}
+.split-image-container i {
+  font-size: 5rem;
+  color: var(--primary);
+}
+
+/* Alternating Rows */
+.alternating-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+@media (min-width: 768px) {
+  .alternating-row {
+    flex-direction: row;
+    gap: 4rem;
+  }
+  .alternating-row:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  .alternating-row > * {
+    flex: 1;
+  }
+}
+.alternating-row:last-child {
+  margin-bottom: 0;
+}
+
+/* Timeline Layout */
+.timeline-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-left: 2rem;
+}
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--border-color);
+  border-radius: 4px;
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 3rem;
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -2.7rem;
+  top: 2rem;
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 50%;
+  border: 4px solid var(--bg-body);
+}
+
+/* Accordion Layout */
+.accordion-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.accordion-summary {
+  padding: 1.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.accordion-summary::-webkit-details-marker {
+  display: none;
+}
+.accordion-summary::after {
+  content: '+';
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+details[open] .accordion-summary::after {
+  content: '-';
+}
+.accordion-content {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  color: var(--text-secondary);
+}
+
+/* Stats Bar */
+.stats-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background: var(--primary);
+  color: white;
+  padding: 3rem;
+  border-radius: var(--radius-lg);
+}
+@media (min-width: 768px) {
+  .stats-bar {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+.stat-box {
+  text-align: center;
+}
+.stat-box h3 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+.stat-box p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Icon List */
+.icon-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.icon-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+.icon-list-icon {
+  background: var(--primary-light);
+  color: var(--primary);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+"""
+
+with open('src/index.css', 'a', encoding='utf-8') as f:
+    f.write(new_css)
+print("CSS injected.")
