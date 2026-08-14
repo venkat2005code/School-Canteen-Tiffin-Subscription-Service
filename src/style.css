@@ -2322,3 +2322,147 @@ details[open] .accordion-summary::after {
     display: none;
   }
 }
+
+/* ==========================================================================
+   Full-Screen Authentication Pages (Login / Signup)
+   ========================================================================== */
+.nk-auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 2rem;
+  position: relative;
+}
+
+/* Toggles positioned at top right */
+.nk-auth-toggles {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 10;
+}
+
+[dir="rtl"] .nk-auth-toggles {
+  right: auto;
+  left: 1.5rem;
+}
+
+.nk-auth-panel {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2.5rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  position: relative;
+  z-index: 2;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.nk-auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.nk-auth-header h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.nk-auth-header p {
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+.nk-auth-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.nk-auth-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.nk-auth-form .form-control {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.nk-auth-form .form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.nk-auth-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+.nk-auth-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.nk-auth-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(224, 93, 56, 0.3);
+}
+
+.nk-auth-footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.95rem;
+}
+
+.nk-auth-footer a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.nk-auth-footer a:hover {
+  text-decoration: underline;
+}
+
+.nk-auth-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  text-decoration: none;
+}
+
+.nk-auth-logo .brand-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 0.75rem;
+}

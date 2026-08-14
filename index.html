@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr" data-theme="light">
 
 <head>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NourishKid - School Canteen & Tiffin Subscription Service</title>
@@ -19,6 +20,21 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <link rel="stylesheet" href="./src/style.css">
+
+  <style>
+    /* Full Height Hero Fix */
+    .hero-wrapper {
+      min-height: calc(100vh - 80px) !important;
+      display: flex !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+      align-items: center !important;
+    }
+    .hero-wrapper > .container {
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
@@ -144,9 +160,9 @@
       <div class="nav-actions">
         <!-- RTL/LTR Toggle -->
         <button class="topbar-icon-btn" aria-label="Toggle Direction Mode" title="Toggle RTL/LTR" type="button"
-          onclick="if(window.app){window.app.toggleDir();}else{var html=document.documentElement; var next=html.getAttribute('dir')==='ltr'?'rtl':'ltr'; html.setAttribute('dir', next); localStorage.setItem('nk_dir', next);}">
-          <i class="fa-solid fa-language"></i>
-        </button>
+          onclick="if(window.app){window.app.toggleDir();}else{var html=document.documentElement; var next=html.getAttribute('dir')==='ltr'?'rtl':'ltr'; html.setAttribute('dir', next); localStorage.setItem('nk_dir', next); var txt = this.querySelector('.rtl-status-text'); if(txt) txt.textContent = next.toUpperCase();}">
+<span class="rtl-status-text" style="font-weight: 700; font-size: 0.85rem;">LTR</span>
+</button>
 
         <!-- Dark / Light Theme Toggle Switch -->
         <button class="topbar-icon-btn" aria-label="Toggle Light/Dark Theme" title="Toggle Theme" type="button"

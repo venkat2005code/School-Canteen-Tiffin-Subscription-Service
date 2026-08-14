@@ -2,6 +2,7 @@
 
 <html data-theme="light" dir="ltr" lang="en">
 <head>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>NourishKid - School Canteen &amp; Tiffin Subscription Service</title>
@@ -123,8 +124,8 @@
 <!-- Right Header Actions -->
 <div class="nav-actions">
 <!-- RTL/LTR Toggle -->
-<button aria-label="Toggle Direction Mode" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleDir();}else{var html=document.documentElement; var next=html.getAttribute('dir')==='ltr'?'rtl':'ltr'; html.setAttribute('dir', next); localStorage.setItem('nk_dir', next);}" title="Toggle RTL/LTR" type="button">
-<i class="fa-solid fa-language"></i>
+<button aria-label="Toggle Direction Mode" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleDir();}else{var html=document.documentElement; var next=html.getAttribute('dir')==='ltr'?'rtl':'ltr'; html.setAttribute('dir', next); localStorage.setItem('nk_dir', next); var txt = this.querySelector('.rtl-status-text'); if(txt) txt.textContent = next.toUpperCase();}" title="Toggle RTL/LTR" type="button">
+<span class="rtl-status-text" style="font-weight: 700; font-size: 0.85rem;">LTR</span>
 </button>
 <!-- Dark / Light Theme Toggle Switch -->
 <button aria-label="Toggle Light/Dark Theme" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleTheme();}else{var html=document.documentElement; var next=html.getAttribute('data-theme')==='light'?'dark':'light'; html.setAttribute('data-theme', next); localStorage.setItem('nk_theme', next); var icon=document.getElementById('theme-icon'); if(icon){icon.className=next==='dark'?'fa-solid fa-sun':'fa-solid fa-moon';}}" title="Toggle Theme" type="button">
@@ -154,8 +155,34 @@
           </p>
 </div>
 </section>
+<!--end-->
+<section class="features-section" style="background: linear-gradient(rgba(11, 15, 25, 0.7), rgba(11, 15, 25, 0.85)), url('./src/assets/hero_classroom.jpg'); background-size: cover; background-position: center; padding: 6rem 1rem;">
+<div class="container">
+<div class="section-header text-center">
+<h2 class="section-title" style="color: white; font-size: 3rem; margin-bottom: 2rem;">Direct Support Channels</h2>
+</div>
+<div class="split-layout">
+<div class="split-image-container" style="flex-direction: column; background: rgba(0, 0, 0, 0.4); padding: 3rem; border-radius: var(--radius-lg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
+<h3 style="margin-bottom: 2rem; color: white;">Contact Information</h3>
+<div style="text-align: left;">
+<p style="margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; display: flex; align-items: center;"><i class="fa-solid fa-phone" style="color: var(--primary); font-size: 1.5rem; width: 30px; margin-right: 15px; flex-shrink: 0;"></i> <span><strong>Phone:</strong> +1 (800) 555-NOURISH</span></p>
+<p style="margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; display: flex; align-items: center;"><i class="fa-solid fa-envelope-open" style="color: var(--secondary); font-size: 1.5rem; width: 30px; margin-right: 15px; flex-shrink: 0;"></i> <span><strong>Email:</strong> support@nourishkid.com</span></p>
+<p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; display: flex; align-items: center;"><i class="fa-solid fa-comments" style="color: var(--accent); font-size: 1.5rem; width: 30px; margin-right: 15px; flex-shrink: 0;"></i> <span><strong>Live Chat:</strong> Available in Parent Portal</span></p>
+</div>
+</div>
+<div class="split-image-container" style="background: var(--bg-primary); padding: 0; overflow: hidden; position: relative; min-height: 350px; border-radius: var(--radius-lg); box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid rgba(255, 255, 255, 0.1);">
+<!-- Interactive Google Map -->
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2476595679543!2d-73.98811802353043!3d40.7565985348888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1687442749439!5m2!1sen!2sus" width="100%" height="100%" style="border:0; position: absolute; top: 0; left: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+</div>
+</div>
+</section>
 <section class="features-section" style="background: var(--bg-card);">
 <div class="container">
+<div class="section-header text-center">
+<h2 class="section-title">Send Us a Message</h2>
+<p class="section-subtitle">We usually respond within 24 hours.</p>
+</div>
 <div style="max-width: 600px; margin: 0 auto; background: var(--bg-primary); padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
 <form onsubmit="window.app ? window.app.handleContactSubmit(event) : alert('Sent!')">
 <div class="form-group">
@@ -176,39 +203,21 @@
 </div>
 </section>
 <!-- Support Channels -->
-<section class="features-section">
-<div class="container">
-<div class="section-header text-center">
-<h2 class="section-title">Direct Support Channels</h2><img src="./src/assets/hero_classroom.jpg" style="width: 100%; max-width: 600px; border-radius: var(--radius-lg); margin: 2rem auto; display: block; box-shadow: var(--shadow-md);"/>
-</div>
-<div class="split-layout">
-<div class="split-image-container" style="flex-direction: column;">
-<h3 style="margin-bottom: 1.5rem;">Contact Information</h3>
-<div style="text-align: left;">
-<p style="margin-bottom: 1rem;"><i class="fa-solid fa-phone" style="color: var(--primary); font-size: 1.5rem; width: 30px; margin-right: 15px;"></i> <strong>Phone:</strong> +1 (800) 555-NOURISH</p>
-<p style="margin-bottom: 1rem;"><i class="fa-solid fa-envelope-open" style="color: var(--secondary); font-size: 1.5rem; width: 30px; margin-right: 15px;"></i> <strong>Email:</strong> support@nourishkid.com</p>
-<p><i class="fa-solid fa-comments" style="color: var(--accent); font-size: 1.5rem; width: 30px; margin-right: 15px;"></i> <strong>Live Chat:</strong> Available in Parent Portal</p>
-</div>
-</div>
-<div class="split-image-container" style="background: var(--bg-primary); padding: 0; overflow: hidden; position: relative; min-height: 300px;">
-<!-- Interactive Google Map -->
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2476595679543!2d-73.98811802353043!3d40.7565985348888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1687442749439!5m2!1sen!2sus" width="100%" height="100%" style="border:0; position: absolute; top: 0; left: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</div>
-</div>
-</div>
-</section>
+<!-- Support Channels -->
+
 <!-- Office Locations -->
-<section class="features-section" style="background: var(--bg-card);">
+<section class="features-section" style="background: linear-gradient(rgba(11, 15, 25, 0.75), rgba(11, 15, 25, 0.85)), url('./src/assets/central-kitchen.jpg'); background-size: cover; background-position: center; padding: 8rem 1rem;">
 <div class="container text-center">
-<h2 class="section-title">Central Kitchen &amp; HQ</h2><img alt="Central Kitchen" src="./src/assets/central-kitchen.jpg" style="width: 100%; height: 350px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: 2rem; border: 1px solid var(--border-color);"/>
-<p class="section-subtitle">Tours available by appointment for school administrators.</p>
-<div style="background: var(--bg-primary); padding: 3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); max-width: 600px; margin: 0 auto;">
-<address style="font-style: normal; font-size: 1.1rem; line-height: 1.6;">
-<strong>NourishKid Operations HQ</strong><br/>
+<h2 class="section-title" style="color: white; font-size: 3rem; margin-bottom: 1rem; font-weight: 800;">Central Kitchen &amp; HQ</h2>
+<p class="section-subtitle" style="color: rgba(255, 255, 255, 0.9); margin-bottom: 4rem; font-size: 1.25rem;">Tours available by appointment for school administrators.</p>
+<div style="background: rgba(0, 0, 0, 0.4); padding: 4rem 3rem; border-radius: var(--radius-lg); border: 1px solid rgba(255, 255, 255, 0.15); max-width: 600px; margin: 0 auto; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+<address style="font-style: normal; font-size: 1.3rem; line-height: 1.8; color: white;">
+<strong style="color: var(--primary); font-size: 1.5rem; display: block; margin-bottom: 1rem;">NourishKid Operations HQ</strong>
               452 Culinary Way<br/>
               Fresh Park, Sector 4<br/>
               Metro District, 10029
             </address>
+<button class="btn btn-primary" style="margin-top: 2.5rem; padding: 1rem 2.5rem; font-size: 1.1rem; border-radius: 50px; box-shadow: 0 10px 20px rgba(255, 126, 85, 0.3); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Book a Tour</button>
 </div>
 </div>
 </section>

@@ -2,6 +2,7 @@
 
 <html data-theme="light" dir="ltr" lang="en">
 <head>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>NourishKid - School Canteen &amp; Tiffin Subscription Service</title>
@@ -123,8 +124,8 @@
 <!-- Right Header Actions -->
 <div class="nav-actions">
 <!-- RTL/LTR Toggle -->
-<button aria-label="Toggle Direction Mode" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleDir();}else{var html=document.documentElement; var next=html.getAttribute('dir')==='ltr'?'rtl':'ltr'; html.setAttribute('dir', next); localStorage.setItem('nk_dir', next);}" title="Toggle RTL/LTR" type="button">
-<i class="fa-solid fa-language"></i>
+<button aria-label="Toggle Direction Mode" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleDir();}else{var html=document.documentElement; var next=html.getAttribute('dir')==='ltr'?'rtl':'ltr'; html.setAttribute('dir', next); localStorage.setItem('nk_dir', next); var txt = this.querySelector('.rtl-status-text'); if(txt) txt.textContent = next.toUpperCase();}" title="Toggle RTL/LTR" type="button">
+<span class="rtl-status-text" style="font-weight: 700; font-size: 0.85rem;">LTR</span>
 </button>
 <!-- Dark / Light Theme Toggle Switch -->
 <button aria-label="Toggle Light/Dark Theme" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleTheme();}else{var html=document.documentElement; var next=html.getAttribute('data-theme')==='light'?'dark':'light'; html.setAttribute('data-theme', next); localStorage.setItem('nk_theme', next); var icon=document.getElementById('theme-icon'); if(icon){icon.className=next==='dark'?'fa-solid fa-sun':'fa-solid fa-moon';}}" title="Toggle Theme" type="button">
@@ -154,35 +155,60 @@
           </p>
 </div>
 </section>
-<section class="features-section" style="background: var(--bg-card);">
+
+</section>
+<!-- Core Values -->
+<section class="features-section" style="padding: 6rem 1rem;">
 <div class="container">
-<div class="section-header text-center">
-<h2 class="section-title">Our Mission</h2><img src="./src/assets/chef.jpg" style="width: 100%; max-width: 600px; border-radius: var(--radius-lg); margin: 2rem auto; display: block; box-shadow: var(--shadow-md);"/>
-<p class="section-subtitle">To provide nutritious, delicious, and safe meals to every student, while making canteen management effortless for schools.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 4rem;">
+  <!-- Left Side: Sticky Title -->
+  <div style="flex: 1; min-width: 300px; position: sticky; top: 100px;">
+    <span class="section-tag" style="display: inline-block; margin-bottom: 1rem;"><i class="fa-solid fa-star"></i> Our Principles</span>
+    <h2 class="section-title" style="font-size: 3rem; margin-top: 0; text-align: left;">Our Core Values</h2>
+    <p class="section-subtitle" style="text-align: left; margin: 0; max-width: 400px;">The guiding principles that dictate how we operate, who we partner with, and how we serve our community every single day.</p>
+  </div>
+  
+  <!-- Right Side: Stacked Cards -->
+  <div style="flex: 2; min-width: 350px; display: flex; flex-direction: column; gap: 2rem;">
+    <!-- Value 1 -->
+    <div style="background: var(--bg-card); padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); display: flex; gap: 2rem; align-items: flex-start; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='var(--shadow-md)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='var(--shadow-sm)';">
+      <div style="width: 70px; height: 70px; background: rgba(255, 126, 85, 0.1); color: var(--primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0;"><i class="fa-solid fa-heart-pulse"></i></div>
+      <div>
+        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; margin-top: 0;">Child First</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 0; font-size: 1.1rem; line-height: 1.6;">Every decision we make prioritizes the health and development of the students we serve. We never compromise on nutrition.</p>
+      </div>
+    </div>
+    
+    <!-- Value 2 -->
+    <div style="background: var(--bg-card); padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); display: flex; gap: 2rem; align-items: flex-start; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='var(--shadow-md)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='var(--shadow-sm)';">
+      <div style="width: 70px; height: 70px; background: rgba(56, 189, 248, 0.1); color: var(--secondary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0;"><i class="fa-solid fa-eye"></i></div>
+      <div>
+        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; margin-top: 0;">Total Transparency</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 0; font-size: 1.1rem; line-height: 1.6;">From ingredient sourcing to kitchen hygiene, parents have full visibility into what their kids eat through our app.</p>
+      </div>
+    </div>
+
+    <!-- Value 3 -->
+    <div style="background: var(--bg-card); padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); display: flex; gap: 2rem; align-items: flex-start; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='var(--shadow-md)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='var(--shadow-sm)';">
+      <div style="width: 70px; height: 70px; background: rgba(16, 185, 129, 0.1); color: var(--accent); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0;"><i class="fa-solid fa-leaf"></i></div>
+      <div>
+        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; margin-top: 0;">Sustainability</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 0; font-size: 1.1rem; line-height: 1.6;">Eco-friendly packaging, local farm partnerships, and optimized route planning to minimize our carbon footprint.</p>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 </section>
-<!-- Core Values -->
-<section class="features-section">
-<div class="container">
-<div class="section-header text-center">
-<h2 class="section-title">Our Core Values</h2>
-</div>
-<div class="features-grid">
-<div class="feature-card">
-<div class="feature-icon-wrapper"><i class="fa-solid fa-heart-pulse"></i></div>
-<h3>Child First</h3>
-<p>Every decision we make prioritizes the health and development of the students we serve.</p>
-</div>
-<div class="feature-card">
-<div class="feature-icon-wrapper" style="background: var(--secondary-light); color: var(--secondary);"><i class="fa-solid fa-eye"></i></div>
-<h3>Total Transparency</h3>
-<p>From ingredient sourcing to kitchen hygiene, parents have full visibility into what their kids eat.</p>
-</div>
-<div class="feature-card">
-<div class="feature-icon-wrapper" style="background: var(--accent-light); color: var(--accent);"><i class="fa-solid fa-leaf"></i></div>
-<h3>Sustainability</h3>
-<p>Eco-friendly packaging and optimized route planning to minimize our carbon footprint.</p>
+<!-- Our Mission -->
+<section class="features-section" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.75)), url('./src/assets/chef.jpg'); background-size: cover; background-position: center 20%; min-height: 85vh; display: flex; align-items: center; justify-content: center; padding: 4rem 1rem;">
+<div class="container" style="width: 100%;">
+<div class="section-header text-center" style="margin-bottom: 0;">
+<h2 class="section-title" style="color: white; font-size: 3.5rem; margin-bottom: 1rem; font-weight: 800;">Our Mission</h2>
+<p class="section-subtitle" style="color: rgba(255, 255, 255, 0.95); font-size: 1.25rem; max-width: 800px; margin: 0 auto 1.5rem auto; line-height: 1.6;">To provide nutritious, delicious, and safe meals to every student, while making canteen management effortless for schools.</p>
+<p style="color: rgba(255, 255, 255, 0.85); font-size: 1.1rem; max-width: 700px; margin: 0 auto 3rem auto; line-height: 1.6;">By partnering directly with local farms and employing top-tier pediatric dietitians, we are setting a new standard for what children eat during their most crucial developmental hours. We believe that good food is the ultimate foundation for a great education.</p>
+<div>
+  <button class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem; border-radius: 50px; box-shadow: 0 10px 20px rgba(255, 126, 85, 0.3); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="window.location.href='./services.html'">Explore Our Programs</button>
 </div>
 </div>
 </div>
@@ -198,12 +224,12 @@
 <p style="font-size: 0.9rem; color: var(--text-muted);">Lead Pediatric Dietitian</p>
 </div>
 <div class="feature-card text-center" style="background: var(--bg-primary);">
-<div style="width: 80px; height: 80px; background: var(--border-color); border-radius: 50%; margin: 0 auto 1rem auto; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-utensils" style="font-size: 2rem;"></i></div>
+<div style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 1rem auto; overflow: hidden;"><img alt="Chef Marcus Chen" src="./src/assets/chef.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: top;"/></div>
 <h4>Chef Marcus Chen</h4>
 <p style="font-size: 0.9rem; color: var(--text-muted);">Executive Culinary Director</p>
 </div>
 <div class="feature-card text-center" style="background: var(--bg-primary);">
-<div style="width: 80px; height: 80px; background: var(--border-color); border-radius: 50%; margin: 0 auto 1rem auto; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-truck-fast" style="font-size: 2rem;"></i></div>
+<div style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 1rem auto; overflow: hidden;"><img alt="Sarah Jenkins" src="./src/assets/founder.png" style="width: 100%; height: 100%; object-fit: cover; object-position: top;"/></div>
 <h4>Sarah Jenkins</h4>
 <p style="font-size: 0.9rem; color: var(--text-muted);">Head of Operations</p>
 </div>
@@ -211,26 +237,40 @@
 </div>
 </section>
 <!-- Our Journey -->
-<section class="features-section">
+<section class="features-section" style="background: var(--bg-card);">
 <div class="container">
 <div class="section-header text-center">
 <h2 class="section-title">Our Journey</h2>
-<img src="./src/assets/nutritionist.jpg" style="width: 100%; max-width: 600px; border-radius: var(--radius-lg); margin: 2rem auto; display: block; box-shadow: var(--shadow-md);">
 <p class="section-subtitle">How we grew from a small community kitchen to a city-wide network.</p>
 </div>
-<div class="timeline-container">
-<div class="timeline-item">
-<h4 style="color: var(--primary); margin-bottom: 0.5rem;">2020</h4>
-<p>Founded by pediatric dietitians noticing a gap in healthy school lunches.</p>
-</div>
-<div class="timeline-item">
-<h4 style="color: var(--secondary); margin-bottom: 0.5rem;">2022</h4>
-<p>Launched the RFID Cashless Canteen pilot program in 5 schools.</p>
-</div>
-<div class="timeline-item">
-<h4 style="color: var(--accent); margin-bottom: 0.5rem;">2025</h4>
-<p>Expanded central kitchen to serve over 14,000 daily meals with automated logistics.</p>
-</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; max-width: 650px; margin: 3rem auto 0 auto;">
+  
+  <!-- 2020 -->
+  <div style="background: var(--bg-body); padding: 2.5rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border-top: 5px solid var(--primary); text-align: center; width: 100%; position: relative;">
+    <div style="width: 50px; height: 50px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; position: absolute; top: -25px; left: 50%; transform: translateX(-50%); border: 4px solid var(--bg-body); box-shadow: var(--shadow-sm);"><i class="fa-solid fa-seedling"></i></div>
+    <h4 style="color: var(--primary); font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem;">2020</h4>
+    <p style="color: var(--text-secondary); margin-bottom: 0; font-size: 1.1rem;">Founded by pediatric dietitians noticing a critical gap in healthy, accessible school lunches.</p>
+  </div>
+  
+  <div style="color: var(--border-color); font-size: 1.5rem; margin: 1rem 0;"><i class="fa-solid fa-angles-down"></i></div>
+
+  <!-- 2022 -->
+  <div style="background: var(--bg-body); padding: 2.5rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border-top: 5px solid var(--secondary); text-align: center; width: 100%; position: relative;">
+    <div style="width: 50px; height: 50px; background: var(--secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; position: absolute; top: -25px; left: 50%; transform: translateX(-50%); border: 4px solid var(--bg-body); box-shadow: var(--shadow-sm);"><i class="fa-solid fa-rocket"></i></div>
+    <h4 style="color: var(--secondary); font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem;">2022</h4>
+    <p style="color: var(--text-secondary); margin-bottom: 0; font-size: 1.1rem;">Launched the RFID Cashless Canteen pilot program, expanding our footprint across 5 major schools.</p>
+  </div>
+
+  <div style="color: var(--border-color); font-size: 1.5rem; margin: 1rem 0;"><i class="fa-solid fa-angles-down"></i></div>
+
+  <!-- 2025 -->
+  <div style="background: var(--bg-body); padding: 2.5rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border-top: 5px solid var(--accent); text-align: center; width: 100%; position: relative;">
+    <div style="width: 50px; height: 50px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; position: absolute; top: -25px; left: 50%; transform: translateX(-50%); border: 4px solid var(--bg-body); box-shadow: var(--shadow-sm);"><i class="fa-solid fa-city"></i></div>
+    <h4 style="color: var(--accent); font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem;">2025</h4>
+    <p style="color: var(--text-secondary); margin-bottom: 0; font-size: 1.1rem;">Expanded to a state-of-the-art central kitchen to serve over 14,000 daily meals with automated logistics.</p>
+  </div>
+  
 </div>
 </div>
 </section>

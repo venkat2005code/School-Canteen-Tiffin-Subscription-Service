@@ -2,6 +2,7 @@
 
 <html data-theme="light" dir="ltr" lang="en">
 <head>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>NourishKid - School Canteen &amp; Tiffin Subscription Service</title>
@@ -123,8 +124,8 @@
 <!-- Right Header Actions -->
 <div class="nav-actions">
 <!-- RTL/LTR Toggle -->
-<button aria-label="Toggle Direction Mode" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleDir();}else{var html=document.documentElement; var next=html.getAttribute('dir')==='ltr'?'rtl':'ltr'; html.setAttribute('dir', next); localStorage.setItem('nk_dir', next);}" title="Toggle RTL/LTR" type="button">
-<i class="fa-solid fa-language"></i>
+<button aria-label="Toggle Direction Mode" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleDir();}else{var html=document.documentElement; var next=html.getAttribute('dir')==='ltr'?'rtl':'ltr'; html.setAttribute('dir', next); localStorage.setItem('nk_dir', next); var txt = this.querySelector('.rtl-status-text'); if(txt) txt.textContent = next.toUpperCase();}" title="Toggle RTL/LTR" type="button">
+<span class="rtl-status-text" style="font-weight: 700; font-size: 0.85rem;">LTR</span>
 </button>
 <!-- Dark / Light Theme Toggle Switch -->
 <button aria-label="Toggle Light/Dark Theme" class="topbar-icon-btn" onclick="if(window.app){window.app.toggleTheme();}else{var html=document.documentElement; var next=html.getAttribute('data-theme')==='light'?'dark':'light'; html.setAttribute('data-theme', next); localStorage.setItem('nk_theme', next); var icon=document.getElementById('theme-icon'); if(icon){icon.className=next==='dark'?'fa-solid fa-sun':'fa-solid fa-moon';}}" title="Toggle Theme" type="button">
@@ -157,6 +158,9 @@
 </section>
 <section class="features-section">
 <div class="container">
+<div class="section-header text-center">
+<h2 class="section-title">General Inquiries</h2>
+</div>
 <div class="features-grid" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
 <div class="feature-card" style="text-align: left;">
 <h3><i class="fa-solid fa-seedling" style="color: var(--primary); margin-right: 10px;"></i> How are food allergies handled?</h3>

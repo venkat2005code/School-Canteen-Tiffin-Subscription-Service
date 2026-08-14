@@ -1232,10 +1232,9 @@ class App {
     document.documentElement.setAttribute('dir', dir);
 
     // Update Button Display Text
-    const statusTextEl = document.getElementById('rtl-status-text');
-    if (statusTextEl) {
-      statusTextEl.textContent = dir.toUpperCase();
-    }
+    document.querySelectorAll('.rtl-status-text').forEach(el => {
+      el.textContent = dir.toUpperCase();
+    });
   }
 
   // Dark/Light Theme Switch
